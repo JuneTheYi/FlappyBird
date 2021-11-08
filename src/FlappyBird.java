@@ -16,42 +16,48 @@ public class FlappyBird extends PApplet{
         birdpic = loadImage("https://raw.githubusercontent.com/junetheyi/flappybird/main/img/bird.png");
         wallpic = loadImage("https://raw.githubusercontent.com/junetheyi/flappybird/main/img/wall.png");
         welcomescreen = loadImage("https://raw.githubusercontent.com/junetheyi/flappybird/main/img/start.png");
-        game = 1; score = 0; highscore = 0; x = -200; vertical = 0;
+        game = 1; // 1 = welcome screen
+        score = 0;
+        highscore = 0;
+        x = -200;
+        vertical = 0;
 //        size(600, 800);
-        fill(0, 0, 0);
-        textSize(20);
+        fill(255, 0, 0); // dictates the text color, this rgb is red so score and high score will be red
+        textSize(20); // whenever we use function text(), this dictates the size (score and high score)
     }
 
     public void settings() {
-        size(600, 800);
+        size(600, 800); // height of the screen, 600 across, 800 going down
     }
 
     public void draw() {
-        if(game == 0) {
-            imageMode(CORNER);
+        if(game == 0) { // game runs when game == 0
+            imageMode(CORNER); // sets the mode for background image in upper left corner
             image(backpic, x, 0);
             image(backpic, x+backpic.width, 0);
-            x -= 5;
-            vertical += 1;
-            y += vertical;
-            if (x == -1800) {
+            x -= 5; //sets the speed in which the background moves
+            vertical += 1; // controls how fast the bird falls,
+            y += vertical; //if vertical is a value, can't control how the bird goes up...
+            if (x == -1800) { // image size is 1800, this just resets the image
                 x =0;
             }
-            for (int i = 0; i<2; i++) {
+            for (int i = 0; i<2; i++) { // drawing the 2 walls in a for loops
                 imageMode(CENTER);
-                image(wallpic, wallx[i], wally[i] - (wallpic.height/2+100));
-                image(wallpic, wallx[i], wally[i] + (wallpic.height/2+100));
-                if (wallx[i] < 0) {
+                image(wallpic, wallx[i], wally[i] - (wallpic.height/2+100)); // controls the top half (bigger # = less wall)
+                image(wallpic, wallx[i], wally[i] + (wallpic.height/2+100)); // controls the bottom half (smaller # = less wall)
+                if (wallx[i] < 0) { // when the wall reaches the left border, this creates new walls
                     wally[i] = (int)random( 200, height-200);
-                    wallx[i] = width;
+                    wallx[i] = width; // width = the right most position
                 }
-                if (wallx[i] == width/2) {
+                if (wallx[i] == width/2) { // if the wall reaches left side, score increases by one. highscore is also saved if relevant
                     highscore = max(++score, highscore);
                 }
+                // collision equation, if y>height or y<0, that means the bird is not on the screen anymore
+                // abs(width/2-wallx[i]) < 25 && abs(y-wally[i])>100) if the dist to x and y axis is too small, we lose.
                 if (y>height || y<0 || (abs(width/2-wallx[i]) < 25 && abs(y-wally[i])>100)) {
                     game =1;
                 }
-                wallx[i] =6;
+                wallx[i] -=6;
             }
             image(birdpic, width/2, y);
             text("Score: " +score, 10, 20);
