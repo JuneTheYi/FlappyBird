@@ -57,10 +57,10 @@ public class FlappyBird extends PApplet{
                 if (y>height || y<0 || (abs(width/2-wallx[i]) < 25 && abs(y-wally[i])>100)) {
                     game =1;
                 }
-                wallx[i] -=6;
+                wallx[i] -=4; // change to 5 or 6 to make the game harder, determines wall movement speed
             }
-            image(birdpic, width/2, y);
-            text("Score: " +score, 10, 20);
+            image(birdpic, width/2, y); // draws the bird
+            text("Score: " +score, 10, 20); //shows the score on the top left (position 10 and 20)
         }
         else {
             imageMode(CENTER);
@@ -70,8 +70,8 @@ public class FlappyBird extends PApplet{
     }
 
     public void mousePressed() {
-        vertical = -15;
-        if (game == 1) {
+        vertical = -15; // whenever we press the mouse, we reduce the vertical by 15. so bird goes up by 15.
+        if (game == 1) { // this is when welcome screen is displayed
             wallx[0] = 600;
             wally[0] = y = height /2;
             wallx[1] = 900;
