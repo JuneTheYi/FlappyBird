@@ -6,15 +6,24 @@ public class FlappyBird extends PApplet{
     PImage backpic, birdpic, wallpic, welcomescreen;
     int game, score, highscore, x, y, vertical, wallx[] = new int[2], wally[] = new int[2];
 
+    public static void main(String[] args) {
+        FlappyBird pt = new FlappyBird();
+        PApplet.runSketch(new String[]{"FlappyBird"}, pt);
+    }
+
     public void setup() {
         backpic = loadImage("https://raw.githubusercontent.com/junetheyi/flappybird/main/img/back.png");
         birdpic = loadImage("https://raw.githubusercontent.com/junetheyi/flappybird/main/img/bird.png");
         wallpic = loadImage("https://raw.githubusercontent.com/junetheyi/flappybird/main/img/wall.png");
         welcomescreen = loadImage("https://raw.githubusercontent.com/junetheyi/flappybird/main/img/start.png");
         game = 1; score = 0; highscore = 0; x = -200; vertical = 0;
-        size(600, 800);
+//        size(600, 800);
         fill(0, 0, 0);
         textSize(20);
+    }
+
+    public void settings() {
+        size(600, 800);
     }
 
     public void draw() {
